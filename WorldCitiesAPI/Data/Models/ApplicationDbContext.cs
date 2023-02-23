@@ -14,7 +14,7 @@ namespace WorldCitiesAPI.Data.Models
 
         }
 
-        public DbSet<City> Citys { get; set; }
-        public DbSet<Country> Countrys { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Country> Countries { get; set; }
     }
 }
