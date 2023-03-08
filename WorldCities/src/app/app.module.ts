@@ -7,10 +7,9 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home-component/home.component';
 import { NavMenuComponent } from './nav-component/nav-menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
+
 import { CitiesComponent } from './cities/cities.component';
+import { AngularMaterialModule } from './angular-material';
 
 @NgModule({
   declarations: [
@@ -24,9 +23,7 @@ import { CitiesComponent } from './cities/cities.component';
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatToolbarModule
+    AngularMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
