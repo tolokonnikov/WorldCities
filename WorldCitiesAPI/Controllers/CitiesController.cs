@@ -1,40 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WorldCitiesAPI.Data.Models;
 
-namespace WorldCitiesAPI.Controllers
-{
+namespace WorldCitiesAPI.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class CitiesController : ControllerBase
-    {
+    public class CitiesController : ControllerBase {
         private readonly ApplicationDbContext _context;
 
-        public CitiesController(ApplicationDbContext context)
-        {
+        public CitiesController(ApplicationDbContext context) {
             _context = context;
         }
 
         // GET: api/Cities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<City>>> GetCities()
-        {
+        public async Task<ActionResult<IEnumerable<City>>> GetCities() {
             return await _context.Cities.ToListAsync();
         }
 
         // GET: api/Cities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<City>> GetCity(int id)
-        {
+        public async Task<ActionResult<City>> GetCity(int id) {
             var city = await _context.Cities.FindAsync(id);
 
-            if (city == null)
-            {
+            if (city == null) {
                 return NotFound();
             }
 
@@ -44,27 +33,21 @@ namespace WorldCitiesAPI.Controllers
         // PUT: api/Cities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCity(int id, City city)
-        {
-            if (id != city.Id)
-            {
+        public async Task<IActionResult> PutCity(int id, City city) {
+            if (id != city.Id) {
                 return BadRequest();
             }
 
             _context.Entry(city).State = EntityState.Modified;
 
-            try
-            {
+            try {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CityExists(id))
-                {
+            catch (DbUpdateConcurrencyException) {
+                if (!CityExists(id)) {
                     return NotFound();
                 }
-                else
-                {
+                else {
                     throw;
                 }
             }
@@ -75,8 +58,7 @@ namespace WorldCitiesAPI.Controllers
         // POST: api/Cities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<City>> PostCity(City city)
-        {
+        public async Task<ActionResult<City>> PostCity(City city) {
             _context.Cities.Add(city);
             await _context.SaveChangesAsync();
 
@@ -85,11 +67,9 @@ namespace WorldCitiesAPI.Controllers
 
         // DELETE: api/Cities/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCity(int id)
-        {
+        public async Task<IActionResult> DeleteCity(int id) {
             var city = await _context.Cities.FindAsync(id);
-            if (city == null)
-            {
+            if (city == null) {
                 return NotFound();
             }
 
@@ -99,8 +79,7 @@ namespace WorldCitiesAPI.Controllers
             return NoContent();
         }
 
-        private bool CityExists(int id)
-        {
+        private bool CityExists(int id) {
             return _context.Cities.Any(e => e.Id == id);
         }
     }
