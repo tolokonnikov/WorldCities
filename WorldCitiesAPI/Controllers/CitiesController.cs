@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WorldCitiesAPI.Data;
 using WorldCitiesAPI.Data.Models;
 
 namespace WorldCitiesAPI.Controllers {
@@ -14,8 +15,19 @@ namespace WorldCitiesAPI.Controllers {
 
         // GET: api/Cities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<City>>> GetCities() {
-            return await _context.Cities.ToListAsync();
+        public async Task<ActionResult<ApiResult<City>>> GetCities(
+            int pageIndex = 0, 
+            int pageSize = 10,
+            string? sortColumn = null,
+            string? sortOrder = null) 
+        {
+            return await ApiResult<City>.CreateAsync(
+                _context.Cities.AsNoTracking(),
+                pageIndex,
+                pageSize,
+                sortColumn,
+                sortOrder
+                );
         }
 
         // GET: api/Cities/5
