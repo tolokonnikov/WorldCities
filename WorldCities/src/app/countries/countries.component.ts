@@ -4,17 +4,17 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { environment } from '../../environments/environment';
-
-import { City } from './city';
+import { Country } from './Country';
 
 @Component({
-  selector: 'app-cities',
-  templateUrl: './cities.component.html',
-  styleUrls: ['./cities.component.scss']
+  selector: 'app-countries',
+  templateUrl: './countries.component.html',
+  styleUrls: ['./countries.component.scss']
 })
-export class CitiesComponent implements OnInit {
-  public displayedColumns: string[] = ['id', 'name', 'lat', 'lon'];
-  public cities!: MatTableDataSource<City>;
+export class CountriesComponent implements OnInit {
+
+  public displayedColumns: string[] = ['id', 'name', 'iso2', 'iso3'];
+  public countries!: MatTableDataSource<Country>;
 
   defaultPageIndex: number = 0;
   defaultPageSize: number = 0;
@@ -27,13 +27,14 @@ export class CitiesComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private http: HttpClient) {
+
   }
 
   ngOnInit(): void {
     this.loadData();
   }
 
-  public loadData(query?: string) {
+  loadData(query?: string) {
     let pageEvent = new PageEvent();
     pageEvent.pageIndex = 0;
     pageEvent.pageSize = 10;
@@ -43,7 +44,7 @@ export class CitiesComponent implements OnInit {
 
   getData(pageEvent: PageEvent) {
 
-    let url = environment.baseUrl + 'api/Cities';
+    let url = environment.baseUrl + 'api/Countries';
 
     let params = new HttpParams()
       .set("pageIndex", pageEvent.pageIndex.toString())
@@ -62,7 +63,7 @@ export class CitiesComponent implements OnInit {
         this.paginator.length = result.totalCount;
         this.paginator.pageIndex = result.pageIndex;
         this.paginator.pageSize = result.pageSize;
-        this.cities = new MatTableDataSource<City>(result.data);
+        this.countries = new MatTableDataSource<Country>(result.data);
       }, error => console.error(error));
   }
 
